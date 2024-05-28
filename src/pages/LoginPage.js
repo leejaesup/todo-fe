@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, Navigate} from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import api from "../utils/api";
 /*
@@ -13,12 +13,11 @@ Local storage👴: 영구적 데이터 저장소, 사용자가 일부러 브라�
 session storage🎈: 세션이 유지되는 동안에만 유요한 저장소 (여기서 세션 유지란, 브라우저가 닫히거나 종료되는 것) 같은 도메인내에 모든 페이지에서 데이터 공유함.
 따라서 토큰값을 session storage에 저장을 하면 브라우저가 닫히는 순간 토큰이 날라가게되서 새로운 창을 열면 다시 로그인을 해야한다. 이와같은 단점을 보안하기위해 refresh token이라는 개념이 있다.♻ refresh token은 로컬스토리지에 저장을해서 브라우저가 닫히더라고 이 refresh token을 이용해 다시 로그인 필요없이 토큰을 재발행 할 수 있는 로직이다. 이로직은 이 코스에서 다루진 않지만 관심있는 친구들이라면 한번 공부해보는 것을 추천한다!
  */
-const LoginPage = () => {
+const LoginPage = ({user, setUser}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const [user, setUser] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (event) => {
@@ -44,6 +43,10 @@ const LoginPage = () => {
     } catch (error) {
       setError(error.message);
     }
+  }
+
+  if (user) {
+    return <Navigate to="/"/>;
   }
 
   return (
